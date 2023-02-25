@@ -1,0 +1,51 @@
+
+#AbilityShopContainer{
+    height: 100%;
+    width: 300px;
+    horizontal-align: right;
+}
+#AbilityShopOpenButton{
+    vertical-align: bottom;
+    horizontal-align: right;
+    min-width: 100px;
+    width: 120px;
+    margin-bottom: 12px;
+    margin-right: 12px;
+    height: 36px;
+}
+#AbilityShopWindow{
+    transition-property: transform, opacity, width;
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
+    horizontal-align: right;
+    flow-children: up;
+    width: 300px;
+    height: 600px;
+    border: 6px solid red;
+    background-image: url("s2r://panorama/images/hud/reborn/bg_mainshop_psd.vtex");
+    opacity: 1;
+    margin-bottom: 206px;
+    vertical-align: bottom;
+    flow-children: right-wrap;
+}
+
+.AbilityShopOpen{
+    transform: translateX( 300px );
+    opacity: 0;
+}
+
+#AbilityShopItem{
+    width: 60px;
+    height: 70px;
+}
+.AbilityShopIcon{
+    width: 50px;
+    height: 50px;
+}
+.AbilityShopBugButton{
+    margin-top: 50px;
+    min-width: 40px;
+    min-height: 20px;
+    width: 40px;
+    height: 20px;
+}

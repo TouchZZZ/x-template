@@ -2,9 +2,9 @@ export class GameConfig {
     constructor() {
         SendToServerConsole('dota_max_physical_items_purchase_limit 9999'); // 用来解决物品数量限制问题
 
-        GameRules.SetCustomGameSetupAutoLaunchDelay(3); // 游戏设置时间（默认的游戏设置是最开始的队伍分配）
-        GameRules.SetCustomGameSetupRemainingTime(3); // 游戏设置剩余时间
-        GameRules.SetCustomGameSetupTimeout(3); // 游戏设置阶段超时
+        GameRules.SetCustomGameSetupAutoLaunchDelay(1); // 游戏设置时间（默认的游戏设置是最开始的队伍分配）
+        GameRules.SetCustomGameSetupRemainingTime(1); // 游戏设置剩余时间
+        GameRules.SetCustomGameSetupTimeout(1); // 游戏设置阶段超时
         GameRules.SetHeroSelectionTime(0); // 选择英雄阶段的持续时间
         GameRules.SetShowcaseTime(0); // 选完英雄的展示时间
         GameRules.SetPreGameTime(0); // 进入游戏后号角吹响前的准备时间
@@ -13,7 +13,7 @@ export class GameConfig {
         GameRules.SetStartingGold(0); // 设置初始金钱
         GameRules.SetGoldTickTime(0); // 设置工资发放间隔
         GameRules.SetGoldPerTick(0); // 设置工资发放数额
-        GameRules.SetHeroRespawnEnabled(false); // 是否允许英雄重生
+        GameRules.SetHeroRespawnEnabled(true); // 是否允许英雄重生
         GameRules.SetCustomGameAllowMusicAtGameStart(false); // 是否允许游戏开始时的音乐
         GameRules.SetCustomGameAllowHeroPickMusic(false); // 是否允许英雄选择阶段的音乐
         GameRules.SetCustomGameAllowBattleMusic(false); // 是否允许战斗阶段音乐
@@ -37,6 +37,7 @@ export class GameConfig {
         });
         game.SetDaynightCycleDisabled(true); // 是否禁用白天黑夜循环
         game.SetDeathOverlayDisabled(true); // 是否禁用死亡遮罩（灰色的遮罩）
+        game.SetFogOfWarDisabled(true);
 
         // 设置自定义的队伍人数上限，这里的设置是10个队伍，每个队伍1人
         GameRules.SetCustomGameTeamMaxPlayers(DotaTeam.GOODGUYS, 1);
@@ -44,5 +45,52 @@ export class GameConfig {
         for (let team = DotaTeam.CUSTOM_1; team <= DotaTeam.CUSTOM_8; ++team) {
             GameRules.SetCustomGameTeamMaxPlayers(team, 1);
         }
+        // CreateUnitByName('npc_dota_hero_mirana', Vector(0, 0, 128), true, null, null, DotaTeam.BADGUYS);
+
+        ListenToGameEvent('npc_spawned', event => this.OnNpcSpawned(event), undefined);
     }
+
+    private OnNpcSpawned(event: NpcSpawnedEvent) {
+        const unit = EntIndexToHScript(event.entindex);
+        if (!unit) return;
+        print(unit.GetName());
+        if(unit.IsBaseNPC()){
+            // unit.AddAbility('skywrath_mage_arcane_bolt');
+            // unit.AddAbility('skywrath_mage_concussive_shot');
+            // unit.AddAbility('lone_druid_spirit_bear');
+            if(unit.IsHero()){
+                unit1 = unit;
+            }
+            // unit.AddAbility('sven_storm_bolt_lua');
+        }
+        print('----------------------------11---');
+    }
+
 }
+let unit1: CDOTA_BaseNPC_Hero;
+let ability1: string;
+let ability2: string;
+CustomGameEventManager.RegisterListener('add', (source, event) => {
+    if (ability1 && unit1.HasAbility(ability1)) {
+        unit1.RemoveAbility(ability1);
+        print('升级！')
+        unit1.SetAbilityPoints(1);
+    }
+    const hasAbility: boolean = unit1.HasAbility(event.name);
+    if (!hasAbility) {
+        unit1.AddAbility(event.name);
+        unit1.FindAbilityByName(event.name).SetLevel(1);
+        ability1 = event.name;
+    }
+});
+CustomGameEventManager.RegisterListener('remove', (source, event) => {
+    if (ability2 && unit1.HasAbility(ability2)) {
+        unit1.RemoveAbility(ability2);
+        unit1.
+    }
+    const hasAbility: boolean = unit1.HasAbility(event.name);
+    if (!hasAbility) {
+        unit1.AddAbility(event.name);
+        ability2 = event.name;
+    }
+});
