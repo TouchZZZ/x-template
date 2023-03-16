@@ -45,19 +45,11 @@ const list: Array<string> = [
     'bane_nightmare',
 ];
 export function AbilityShop() {
-    function clickAbilityShop() {
-        $.Msg($('#AbilityShopWindow'));
-        $('#AbilityShopWindow').ToggleClass('AbilityShopOpen');
-    }
-
     return (
         <Panel id="AbilityShopContainer">
-            <Button id="AbilityShopOpenButton" className={'ButtonBevel'} onactivate={clickAbilityShop}>
-                <Label text="技能" />
-            </Button>
             <Panel id="AbilityShopWindow">
                 {list.map(item => (
-                    <AbilityShopItem name={item} />
+                    <AbilityShopItem name={item} gold={Math.floor(Math.random() * 3000) + 500} />
                 ))}
             </Panel>
         </Panel>

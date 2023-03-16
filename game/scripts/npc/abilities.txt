@@ -5,7 +5,7 @@
 // Template: https://github.com/XavierCHN/x-template
 "XLSXContent"
 {
-	"ability_test" {
+	"ability_test1" {
 		"BaseClass" "ability_lua"
 		"AbilityValues" {
 			"damage" "0.1 0.2 0.3 0.4"
@@ -13,8 +13,35 @@
 			"test" "1"
 			"another_test" "10.5 2.3 3.3 1.1"
 		}
-		"MaxLevel" "2"
+		"MaxLevel" "4"
 		"AbilityCooldown" "1 2 3 4 "
 		"AbilityManaCost" "1 1 1 1"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	"ability_test2" {
+		"BaseClass" "ability_lua"
+		"AbilityValues" {
+			"damage" "0.1 0.2 0.3 0.4"
+			"radius" "1 2 3 4"
+			"test" "1"
+			"another_test" "10.5 2.3 3.3 1.1"
+		}
+		"MaxLevel" "4"
+		"AbilityCooldown" "1 2 3 4 "
+		"AbilityManaCost" "1 1 1 1"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+	"ability_test3" {
+		"BaseClass" "ability_lua"
+		"AbilityValues" {
+			"damage" "0.1 0.2 0.3 0.4"
+			"radius" "1 2 3 4"
+			"test" "1"
+			"another_test" "10.5 2.3 3.3 1.1"
+		}
+		"MaxLevel" "4"
+		"AbilityCooldown" "1 2 3 4 "
+		"AbilityManaCost" "1 1 1 1"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 }

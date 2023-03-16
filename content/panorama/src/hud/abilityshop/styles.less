@@ -1,27 +1,19 @@
 
 #AbilityShopContainer{
     height: 100%;
-    width: 300px;
+    width: 400px;
     horizontal-align: right;
 }
-#AbilityShopOpenButton{
-    vertical-align: bottom;
-    horizontal-align: right;
-    min-width: 100px;
-    width: 120px;
-    margin-bottom: 12px;
-    margin-right: 12px;
-    height: 36px;
-}
+
 #AbilityShopWindow{
+    padding: 10px;
     transition-property: transform, opacity, width;
     transition-duration: .1s;
     transition-timing-function: ease-in-out;
     horizontal-align: right;
     flow-children: up;
-    width: 300px;
+    width: 400px;
     height: 600px;
-    border: 6px solid red;
     background-image: url("s2r://panorama/images/hud/reborn/bg_mainshop_psd.vtex");
     opacity: 1;
     margin-bottom: 206px;
@@ -35,17 +27,70 @@
 }
 
 #AbilityShopItem{
+    padding-top: 10px;
+    padding-left: 10px;
     width: 60px;
-    height: 70px;
+    height: 98px;
 }
 .AbilityShopIcon{
     width: 50px;
     height: 50px;
 }
-.AbilityShopBugButton{
-    margin-top: 50px;
-    min-width: 40px;
-    min-height: 20px;
-    width: 40px;
-    height: 20px;
+.AbilityShopBuyButton{
+    vertical-align: bottom;
+    margin-bottom: 10px;
+    width: 60px;
+    height: 18px;
+}
+.AbilityShopBugButtonLabel{
+    font-size: 13px;
+    font-weight: bold;
+    color:#ffcc33;
+    //text-align: center;
+    min-width: 60px;
+    height: 26px;
+    text-align: right;
+    vertical-align: center;
+    horizontal-align: right;
+    margin-right:20px;
+    //width: 100%;
+    //letter-spacing:1px;
+    //text-shadow: 0px 1px 2px 3.0 #00000066;
+    //text-overflow: shrink;
+}
+
+.ButtonClass{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #373d45 ), to( #4d5860 ) );
+    border-style: solid;
+    border-width: 1px;
+    border-top-color: #555555;
+    border-left-color: #494949;
+    border-bottom-color: #333333;
+    border-right-color: #404040;
+    transition-property: background-color, opacity;
+    transition-duration: 0.05s;
+    transition-timing-function: linear;
+    box-shadow: #00000055 0px 0px 4px 0px;
+}
+.ButtonClass:hover{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #4c5561 ), to( #6c7d88 ) );
+    border-top-color: #aaaaaa77;
+    border-left-color: #aaaaaa33;
+    border-bottom-color: #333333;
+    border-right-color: #404040;
+}
+.ButtonClass:active{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #393939 ), to( #555555 ) );
+    border-top-color: #222222;
+    border-left-color: #303030;
+    border-bottom-color: #666666;
+    border-right-color: #444444;
+}
+.AbilityShopBugButtonIcon{
+    background-image: url("s2r://panorama/images/hud/reborn/gold_small_psd.vtex");
+    background-size: 100% 100%;
+    width:15px;
+    height:15px;
+    horizontal-align: right;
+    vertical-align: center;
 }
