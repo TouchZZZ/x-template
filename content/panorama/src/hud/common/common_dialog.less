@@ -1,0 +1,111 @@
+.CommonDialogContainer{
+    width: fit-children;
+    min-width: 400px;
+    height: fit-children;
+    min-height: 150px;
+    align: center center;
+    background-color: gradient(linear, 0% 0%, 0% 25%, from(#232326), to(#1c1d20));
+    box-shadow: #00000099 0px 0px 8px 0px;
+    border: 2px solid #32383677;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+    flow-children: none;
+    transition-property: transform, opacity;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+    opacity: 1;
+}
+
+.CommonDialogTitle {
+    font-family: defaultFont;
+    letter-spacing: 2px;
+    font-size: 24px;
+    font-weight: thin;
+    color: #939da0;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.CommonDialogClose {
+    vertical-align: top;
+    width: 32px;
+    height: 32px;
+    horizontal-align: right;
+    background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-right: -25px;
+    margin-top: 6px;
+    opacity: 0.5;
+    wash-color: #cdf;
+    transition-property: opacity;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+.CommonDialogBody {
+    width: 100%;
+    height: fit-children;
+    flow-children: right-wrap;
+}
+
+.CommonDialogContent {
+    width: 100%;
+    flow-children: down;
+    height: fit-children;
+}
+
+
+
+
+
+
+
+.CustomKeybinder {
+    width: 84px;
+    height: 84px;
+    margin: 12px;
+    margin-top: 13px;
+    border: 2px solid #414a45;
+    background-color: #2b2f30;
+    color: #7d8688;
+    transition-property: background-color, border, color;
+    transition-duration: 0.16s;
+    transition-timing-function: ease-in-out;
+}
+.CustomKeybinder:hover {
+    background-color: #414a45;
+    border-color: #5b6a62;
+    color: white;
+}
+.CustomKeybinder.active {
+    background-color: #323836;
+    border: 2px solid #5c99ff;
+    padding-left: 0px;
+    box-shadow: #5c99ff22 0px 0px 8px 0px;
+}
+.CustomKeybinder #title {
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    font-size: 40px;
+    font-weight: thin;
+    vertical-align: bottom;
+    horizontal-align: right;
+    text-align: right;
+    margin-right: 4px;
+    margin-bottom: -12px;
+    padding-top: 3px;
+    text-transform: uppercase;
+    transition-property: color, background-color;
+    transition-duration: 0.16s;
+    transition-timing-function: ease-in-out;
+}
+.CustomKeybinder:hover #title {
+    color: #5c6460;
+}
+.hide{
+    visibility: collapse;
+    opacity: 1;
+}

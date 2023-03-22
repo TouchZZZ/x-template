@@ -6,6 +6,7 @@
         <include src="s2r://panorama/styles/dotastyles.vcss_c" />
         <include src="./styles.less" />
         <include src="./abilityshop/styles.less" />
+        <include src="./common/common_dialog.less" />
     </styles>
     <Panel class="root" hittest="false" >
     </Panel>

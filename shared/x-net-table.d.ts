@@ -1,26 +1,21 @@
 // 面向所有人的XNetTables
 declare interface XNetTableDefinations {
-    // players: [
-    //     {
-    //         choiceHeroList: [
-    //             {
-    //                 name: string;
-    //                 ab1: string;
-    //                 ab2: string;
-    //                 ab3: string;
-    //                 ab4: string;
-    //             }
-    //         ];
-    //     }
-    // ];
-    heroTable: {
-        choiceHero: {
+    heroInfoTable: {
+        abilities: {
+            name: string[];
+        };
+    };
+    commonPool: {
+        heroPool: {
             choiceHeroList: HeroInfoDO[][];
             // choiceHeroList: HeroInfoDO[][];
             // pk2?: HeroInfoDO[];
             // pk3?: HeroInfoDO[];
             // pk4?: HeroInfoDO[];
             // pk5?: HeroInfoDO[];
+        };
+        abilityPool: {
+            abilityList: string[];
         };
     };
     test_table: {

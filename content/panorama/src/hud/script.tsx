@@ -36,7 +36,6 @@ function MapPanel() {
         let getAbility = Entities.GetAbility(playerHeroIndex, 1);
         // Game.AddCommand('dota_create_unit npc_dota_hero_axe enemy', () => {}, '', 1);
         // Game.ServerCmd('dota_create_unit npc_dota_hero_axe enemy');
-        $.Msg('11');
         // Game.ServerCmd('dota_ability_quickcast 0 1');
         // AddKeyBind(
         //     'N',
