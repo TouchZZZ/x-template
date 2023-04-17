@@ -21,6 +21,7 @@ export const CommonDialog: React.FC = () => {
     }
 
     function onClose(e: Panel) {
+        // Game.ServerCmd('dota_camera_center');
         e.GetParent()?.AddClass('hide');
     }
 

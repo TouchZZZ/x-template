@@ -148,10 +148,10 @@ export class HeroAbility {
 
         let set: Set<number> = new Set<number>();
         let list: HeroInfoDO[] = [];
-        for (let i = 0; i < 15; i++) {
-            let number = RandomInt(1, 25);
+        for (let i = 0; i < 30; i++) {
+            let number = RandomInt(1, 100);
             while (set.has(number)) {
-                number = RandomInt(1, 25);
+                number = RandomInt(1, 100);
             }
             set.add(number);
             let hero = new HeroInfoDO();
@@ -187,17 +187,18 @@ export class HeroAbility {
         // DeepPrintTable(list);
         GameRules.XNetTable.SetTableValue('commonPool', 'heroPool', {
             choiceHeroList: [
-                [list[0], list[1], list[2]],
-                [list[3], list[4], list[5]],
-                [list[6], list[7], list[8]],
-                [list[9], list[10], list[11]],
-                [list[12], list[13], list[14]],
+                [list[0], list[1], list[2], list[3], list[4], list[5]],
+                [list[6], list[7], list[8], list[9], list[10], list[11]],
+                [list[12], list[13], list[14], list[15], list[16], list[17]],
+                [list[18], list[19], list[20], list[21], list[22], list[23]],
+                [list[24], list[25], list[26], list[27], list[28], list[29]],
             ],
         });
     }
 
 
     private replaceAbility(event) {
+        // SendToConsole('dota_camera_center');
         let player = PlayerResource.GetPlayer(event.PlayerID);
         let hero: CDOTA_BaseNPC_Hero = player.GetAssignedHero();
         if (!hero.HasAbility(event.inAbilityName)) {

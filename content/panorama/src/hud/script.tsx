@@ -21,7 +21,9 @@ const Test: React.FC = () => {
 //id="ButtonContainer"
 render(<MapPanel />, $.GetContextPanel());
 function MapPanel() {
+
     function clickAbilityShop() {
+
         // $('#AbilityShopContainer').ToggleClass('AbilityShopOpen');
         $('#AbilityShopContainer').ToggleClass('AbilityShopOpen');
 

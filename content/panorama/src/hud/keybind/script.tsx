@@ -12,87 +12,6 @@ type AbilityBindInfoDO = {
     idx: number;
     quickCast: boolean;
 };
-
-const KeyBindRoot: React.FC = () => {
-    // return React.useMemo(
-    //     () => <Label text={`${string_data}`} style={{ width: '100px', height: '200px', border: '8px solid yellow;' }} />,
-    //     [string_data]
-    function OnSettingsClose() {
-        let playerHeroIndex: EntityIndex = Players.GetLocalPlayerPortraitUnit();
-        let getAbility = Entities.GetAbility(playerHeroIndex, 4);
-        //面板找技能
-        let i = 0;
-        let numList: AbilityBindInfoDO[] = [];
-        while (true) {
-            let abMain = $.GetContextPanel()
-                .GetParent()
-                ?.GetParent()
-                ?.GetParent()
-                ?.FindChildTraverse('HUDElements')
-                ?.FindChildTraverse('abilities')
-                ?.FindChildTraverse('Ability' + i);
-            if (null == abMain) {
-                break;
-            } else {
-                if (numList[i] == undefined) {
-                    let img: AbilityImage = abMain.FindChildTraverse('AbilityImage') as AbilityImage;
-                    //找key
-                    let abKeyText = abMain?.FindChildTraverse('Hotkey')?.FindChildTraverse('HotkeyText') as LabelPanel;
-                    $.Msg(abKeyText);
-                    // let keybind = Abilities.GetKeybind(Entities.GetAbilityByName(playerHeroIndex, abKeyText.text));
-                    numList[i] = { name: img.abilityname, idx: i, quickCast: false, hotkey: abKeyText?.text.startsWith('[!') ? '' : abKeyText.text };
-                    // numList[i] = { name: img.abilityname, idx: i, quickCast: false, hotkey: keybind };
-
-                }
-            }
-            i++;
-        }
-        setKeyItem(numList);
-    }
-
-    // useGameEvent('add', () => {
-    //     //刷新找出全部的技能
-    //     let playerHeroIndex: EntityIndex = Players.GetLocalPlayerPortraitUnit();
-    //     let getAbility = Entities.GetAbility(playerHeroIndex, 4);
-    //     $.Msg('11');
-    //     $.Msg(Abilities.GetAbilityName(getAbility));
-    // });
-    const [keyItem, setKeyItem] = useState<AbilityBindInfoDO[]>([]);
-    // const findAllAbility: () => void = () => {
-    //     const aa = [0, 1];
-    //     const [data] = useXNetTableKey(`test_table`, `test_key`, { data_1: `unknown` });
-    //     const string_data = data.data_1;
-    //     // test();
-    //     // const [result] = useXNetTableKey(`heroTable`, `choiceHero`, { pk1: `unknown` });
-    //     // $.Msg('aaaa111');
-    //     // $.Msg(result);
-    //     return React.useMemo(() => <Label text={`${string_data}`} style={{ width:'100px',height:'200px',border: '8px solid yellow;' }} />, [string_data]);
-    //     // return React.useMemo(
-    //     //     () => {
-    //     //         <Panel id="SettingsKeybindsList">{aa.map((item) => (
-    //     //             <KeyBindItem idx={item}/>
-    //     //         ))}</Panel>
-    //     //     },
-    //     //     []);
-    // }
-
-    return (
-        <Panel id="SettingsRoot">
-            <Button id="SettingsClose" onactivate={OnSettingsClose} />
-            <Panel id="SettingsContent">
-                <Panel id="SettingsKeybinds">
-                    <Label className="SettingsSectionTitle" text="键盘绑定" />
-                    <Panel id="SettingsKeybindsList">
-                        {keyItem.map(item => (
-                            <KeyBindItem idx={item.idx} name={item.name} quickCast={item.quickCast} hotkey={item.hotkey} />
-                        ))}
-                        {/*<KeyBindItem idx={0} />*/}
-                    </Panel>
-                </Panel>
-            </Panel>
-        </Panel>
-    );
-};
 const keyList = [
     '1',
     '2',
@@ -175,63 +94,171 @@ const keyList = [
     'mouse11',
 ];
 
-for (const key of keyList) {
-    AddKeyBind(
-        key,
-        () => {
-            //按钮被按
-            // $.Msg(choicePanel.FindChildTraverse('value'));
-            if (choicePanel) {
-                choicePanel.RemoveClass('active');
-                let panel: LabelPanel = choicePanel.FindChildTraverse('value') as LabelPanel;
-                if (panel) {
-                    panel.text = key;
-                }
-                let mod = choicePanel.FindChildTraverse('mod') as LabelPanel;
-                let idx = choicePanel.GetAttributeInt('idx', 0);
-                let name = choicePanel.GetAttributeString('name', '');
-                //当前hotkey
-                let oldHotKey = $.GetContextPanel()
-                    .GetParent()
-                    ?.GetParent()
-                    ?.GetParent()
-                    ?.FindChildTraverse('HUDElements')
-                    ?.FindChildTraverse('abilities')
-                    ?.FindChildTraverse('Ability' + idx)
-                    ?.FindChildTraverse('Hotkey');
-                let oldKey: LabelPanel = oldHotKey?.FindChildTraverse('HotkeyText') as LabelPanel;
-                //原来的失效
-                keyMap.set(oldKey.text?.toLowerCase(), undefined);
-                if (mod) {
-                    let playerHeroIndex: EntityIndex = Players.GetLocalPlayerPortraitUnit();
-                    let getAbility = Entities.GetAbilityByName(playerHeroIndex, name);
-                    keyMap.set(key.toLowerCase(), getAbility);
-                }
-                if (oldHotKey) {
-                    oldHotKey.style.visibility = 'visible';
-                }
+const KeyBindRoot: React.FC = () => {
 
-                //图标
-                oldKey.text = key.toUpperCase();
-                choicePanel = null;
+    initKeyBind();
+    function initKeyBind() {
+        // GameUI.CustomUIConfig().EventBus?.Add(Ability1, () => $.Msg("Ability 1 Has Been Cast"))
+        for (const ele in DOTAKeybindCommand_t) {
+            // @ts-ignore
+            let key = Game.GetKeybindForCommand(DOTAKeybindCommand_t[ele]);
+            let indexOf = keyList.indexOf(key.toLowerCase());
+
+            if (indexOf >= 0) {
+                delete keyList[indexOf];
+            }
+        }
+        // $.Msg(Game.GetKeybindForCommand(DOTAKeybindCommand_t.DOTA_KEYBIND_ABILITY_PRIMARY1));
+        // $.Msg(Game.GetKeybindForCommand(DOTAKeybindCommand_t.DOTA_KEYBIND_ABILITY_PRIMARY1_QUICKCAST));
+        $.Msg(keyList);
+        for (const key of keyList) {
+            if (null != key) {
+                AddKeyBind(
+                    key,
+                    () => {
+                        //按钮被按
+                        // $.Msg(choicePanel.FindChildTraverse('value'));
+                        if (choicePanel) {
+                            choicePanel.RemoveClass('active');
+                            let panel: LabelPanel = choicePanel.FindChildTraverse('value') as LabelPanel;
+                            if (panel) {
+                                panel.text = key;
+                            }
+                            let mod = choicePanel.FindChildTraverse('mod') as LabelPanel;
+                            let idx = choicePanel.GetAttributeInt('idx', 0);
+                            let name = choicePanel.GetAttributeString('name', '');
+                            //当前hotkey
+                            let oldHotKey = $.GetContextPanel()
+                                .GetParent()
+                                ?.GetParent()
+                                ?.GetParent()
+                                ?.FindChildTraverse('HUDElements')
+                                ?.FindChildTraverse('abilities')
+                                ?.FindChildTraverse('Ability' + idx)
+                                ?.FindChildTraverse('Hotkey');
+                            let oldKey: LabelPanel = oldHotKey?.FindChildTraverse('HotkeyText') as LabelPanel;
+                            //原来的失效
+                            keyMap.set(oldKey.text?.toLowerCase(), undefined);
+                            if (mod) {
+                                let playerHeroIndex: EntityIndex = Players.GetLocalPlayerPortraitUnit();
+                                let getAbility = Entities.GetAbilityByName(playerHeroIndex, name);
+                                keyMap.set(key.toLowerCase(), getAbility);
+                            }
+                            if (oldHotKey) {
+                                oldHotKey.style.visibility = 'visible';
+                            }
+
+                            //图标
+                            oldKey.text = key.toUpperCase();
+                            choicePanel = null;
+                        } else {
+                            //使用
+                            let getAbility: AbilityEntityIndex | undefined = keyMap.get(key.toLowerCase());
+                            let abName = '';
+                            if (getAbility) {
+                                abName = Abilities.GetAbilityName(getAbility);
+                            }
+                            if (getAbility) {
+                                // $.Msg(getAbility);
+                                let playerHeroIndex: EntityIndex = Players.GetLocalPlayerPortraitUnit();
+                                $.Msg(abilityQuickCastSet.has(abName));
+                                Abilities.ExecuteAbility(getAbility, playerHeroIndex, true);
+                            }
+                        }
+                    },
+                    () => {}
+                );
+            }
+        }
+    }
+
+    // return React.useMemo(
+    //     () => <Label text={`${string_data}`} style={{ width: '100px', height: '200px', border: '8px solid yellow;' }} />,
+    //     [string_data]
+    function OnSettingsClose() {
+        let playerHeroIndex: EntityIndex = Players.GetLocalPlayerPortraitUnit();
+        let getAbility = Entities.GetAbility(playerHeroIndex, 4);
+        for (let j = 0; j < 10; j++) {
+            let ability = Entities.GetAbility(playerHeroIndex, j);
+            $.Msg(Abilities.GetAbilityName(ability));
+        }
+        //面板找技能
+        let i = 0;
+        let numList: AbilityBindInfoDO[] = [];
+        while (true) {
+            let abMain = $.GetContextPanel()
+                .GetParent()
+                ?.GetParent()
+                ?.GetParent()
+                ?.FindChildTraverse('HUDElements')
+                ?.FindChildTraverse('abilities')
+                ?.FindChildTraverse('Ability' + i);
+            if (null == abMain) {
+                break;
             } else {
-                //使用
-                let getAbility: AbilityEntityIndex | undefined = keyMap.get(key.toLowerCase());
-                let abName = '';
-                if (getAbility) {
-                    abName = Abilities.GetAbilityName(getAbility);
-                }
-                if (getAbility) {
-                    // $.Msg(getAbility);
-                    let playerHeroIndex: EntityIndex = Players.GetLocalPlayerPortraitUnit();
-                    $.Msg(abilityQuickCastSet.has(abName));
-                    Abilities.ExecuteAbility(getAbility, playerHeroIndex, true);
+                if (numList[i] == undefined) {
+                    let img: AbilityImage = abMain.FindChildTraverse('AbilityImage') as AbilityImage;
+                    //找key
+                    let abKeyText = abMain?.FindChildTraverse('Hotkey')?.FindChildTraverse('HotkeyText') as LabelPanel;
+                    $.Msg(abKeyText);
+                    // let keybind = Abilities.GetKeybind(Entities.GetAbilityByName(playerHeroIndex, abKeyText.text));
+                    numList[i] = { name: img.abilityname, idx: i, quickCast: false, hotkey: abKeyText?.text.startsWith('[!') ? '' : abKeyText.text };
+                    // numList[i] = { name: img.abilityname, idx: i, quickCast: false, hotkey: keybind };
+
                 }
             }
-        },
-        () => {}
+            i++;
+        }
+        setKeyItem(numList);
+    }
+
+    // useGameEvent('add', () => {
+    //     //刷新找出全部的技能
+    //     let playerHeroIndex: EntityIndex = Players.GetLocalPlayerPortraitUnit();
+    //     let getAbility = Entities.GetAbility(playerHeroIndex, 4);
+    //     $.Msg('11');
+    //     $.Msg(Abilities.GetAbilityName(getAbility));
+    // });
+    const [keyItem, setKeyItem] = useState<AbilityBindInfoDO[]>([]);
+    // const findAllAbility: () => void = () => {
+    //     const aa = [0, 1];
+    //     const [data] = useXNetTableKey(`test_table`, `test_key`, { data_1: `unknown` });
+    //     const string_data = data.data_1;
+    //     // test();
+    //     // const [result] = useXNetTableKey(`heroTable`, `choiceHero`, { pk1: `unknown` });
+    //     // $.Msg('aaaa111');
+    //     // $.Msg(result);
+    //     return React.useMemo(() => <Label text={`${string_data}`} style={{ width:'100px',height:'200px',border: '8px solid yellow;' }} />, [string_data]);
+    //     // return React.useMemo(
+    //     //     () => {
+    //     //         <Panel id="SettingsKeybindsList">{aa.map((item) => (
+    //     //             <KeyBindItem idx={item}/>
+    //     //         ))}</Panel>
+    //     //     },
+    //     //     []);
+    // }
+
+    return (
+        <Panel id="SettingsRoot">
+            <Button id="SettingsClose" onactivate={OnSettingsClose} />
+            <Panel id="SettingsContent">
+                <Panel id="SettingsKeybinds">
+                    <Label className="SettingsSectionTitle" text="键盘绑定" />
+                    <Panel id="SettingsKeybindsList">
+                        {keyItem.map(item => (
+                            <KeyBindItem idx={item.idx} name={item.name} quickCast={item.quickCast} hotkey={item.hotkey} />
+                        ))}
+                        {/*<KeyBindItem idx={0} />*/}
+                    </Panel>
+                </Panel>
+            </Panel>
+        </Panel>
     );
-}
+};
+
+// AddKeyBind('F1',()=>{});
+
+
 
 function AddKeyBind(keyName: string, keydownCallback?: () => void, keyupCallback?: () => void) {
     // const command = `on${keyName}`;
@@ -272,13 +299,6 @@ const KeyBindItem: React.FC<AbilityBindInfoDO> = props => {
     // const { idx } = props;
 
     function onClick(e: Button) {
-        // let playerHeroIndex: EntityIndex = Players.GetLocalPlayerPortraitUnit();
-        // let getAbility = Entities.GetAbility(playerHeroIndex, 0);
-
-        // $('#CustomBinder').AddClass('active');
-        //
-        // $.Msg(idx);
-        // $.Msg($('#CustomBinder'));
         e.SetAttributeInt('idx', props.idx);
         e.AddClass('active');
         e.SetAttributeString('name', props.name);

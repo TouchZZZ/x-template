@@ -7,16 +7,16 @@ import {HeroAbility} from "./ability/HeroAbility";
 export class GameConfig {
     constructor() {
         SendToServerConsole('dota_max_physical_items_purchase_limit 9999'); // 用来解决物品数量限制问题
-        SendToServerConsole('unbindall');
+        // SendToServerConsole('unbindall');
         print('aaa');
         // SendToServerConsole('bind f dota_ability_quickcast 0 1');
-        SendToConsole('bind f dota_ability_quickcast 0 1');
+        // SendToConsole('bind f dota_ability_quickcast 0 1');
         // SendToServerConsole('dota_create_unit npc_dota_hero_axe enemy');
 
         GameRules.SetCustomGameSetupAutoLaunchDelay(0); // 游戏设置时间（默认的游戏设置是最开始的队伍分配）
         GameRules.SetCustomGameSetupRemainingTime(0); // 游戏设置剩余时间
         GameRules.SetCustomGameSetupTimeout(1); // 游戏设置阶段超时
-        GameRules.SetHeroSelectionTime(500); // 选择英雄阶段的持续时间
+        GameRules.SetHeroSelectionTime(5000); // 选择英雄阶段的持续时间
         GameRules.SetShowcaseTime(0); // 选完英雄的展示时间
         GameRules.SetStrategyTime(0);
         GameRules.SetPreGameTime(0); // 进入游戏后号角吹响前的准备时间
